@@ -92,7 +92,7 @@ dependencies:
       - contourpy==1.3.2
       - cycler==0.12.1
       - datasets==3.5.0
-      - diffusers==0.34.0.dev0
+      # - diffusers==0.34.0.dev0
       - dill==0.3.8
       - docker-pycreds==0.4.0
       - filelock==3.18.0
@@ -146,8 +146,8 @@ dependencies:
       - smmap==5.0.2
       - sympy==1.14.0
       - tokenizers==0.21.1
-      - torch==2.7.0
-      - torchvision==0.21.0
+      - torch>=2.0.0
+      - torchvision
       - tqdm==4.67.1
       - transformers==4.51.1
       - triton==3.3.0

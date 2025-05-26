@@ -59,9 +59,9 @@ Create 4chan posts with images.
     --resolution=512 \
     --center_crop \
     --random_flip   \
-    --train_batch_size=2   \
+    --train_batch_size=24   \
     --gradient_accumulation_steps=4   \
-    --max_train_steps=150   \
+    --max_train_steps=1500   \
     --learning_rate=1e-04   \
     --max_grad_norm=1   \
     --lr_scheduler="cosine" \
@@ -71,7 +71,7 @@ Create 4chan posts with images.
     --hub_model_id=${HUB_MODEL_ID}   \
     --report_to=wandb   \
     --checkpointing_steps=500   \
-    --validation_prompt="sad pepe"   \
+    --validation_prompt="A very sad Pepe the Frog, crying in a dark room, digital art"   \
     --seed=1337 \
     --caption_column="features"
     ```
