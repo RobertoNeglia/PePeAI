@@ -1,0 +1,11 @@
+Enviorment:
+conda create -n kek_llm python=3.10 -y     
+conda activate kek_llm
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+python -m pip install bitsandbytes --prefer-binary --extra-index-url=https://jllllll.github.io/bitsandbytes-windows-webui
+pip install  transformers  datasets  peft  huggingface_hub  bitsandbytes  accelerate orjson tqdm  beautifulsoup4  lxml 
+
+Trainig data:
+download from: https://zenodo.org/records/3606810#.YpjGgexByDU
+unzstd pol_0616-1119_labeled.tar.zst
+tar -xvf pol_0616-1119_labeled.tar
