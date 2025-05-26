@@ -12,7 +12,6 @@ import torch
 from huggingface_hub import login
 from textsetup import post_extractor
 from datasets import Dataset
-from torch.utils.data import DataLoader
 
 login(token="insert token")
 
