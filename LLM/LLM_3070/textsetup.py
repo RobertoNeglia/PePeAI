@@ -1,11 +1,17 @@
-import orjson
-from tqdm import tqdm
-from bs4 import BeautifulSoup
+# Import necessary libraries
+import orjson # Fast JSON
+from tqdm import tqdm # Progress bar utility
+from bs4 import BeautifulSoup # HTML cleaner
 import re
 
-url_pattern = re.compile(r'https?://\S+|www\.\S+')
+url_pattern = re.compile(r'https?://\S+|www\.\S+') # Regex to match URLs
 
 def clean_text(text):
+    """Cleans raw 4chan post text by:
+    1. Removing HTML line breaks (<wbr>) and newlines to Isolate URLs
+    2. Extracting text from HTML
+    3. Removing URLs
+    """
     if not text:
         return ""
     text = text.replace("<wbr>", "").replace("\n", "")
@@ -15,6 +21,19 @@ def clean_text(text):
     return text
 
 def post_extractor(ndjson_path="pol_062016-112019_labeled.ndjson", sample_size=100, min_len=10, tokenizer=None):
+    """
+    Extracts and processes posts from 4chan JSONL file.
+    
+    Args:
+        ndjson_path: Path to NDJSON file containing 4chan posts
+        sample_size: Maximum number of posts to extract
+        min_len: Minimum character length of post to include (not token length)
+        tokenizer: tokenizer for immediate text processing
+    
+    Returns:
+        Tuple of (tokenized_prompts, metadata) if tokenizer provided
+        or (empty_list, metadata) if no tokenizer
+    """
     meta_data = []
     prompts = []
     
@@ -62,6 +81,14 @@ def post_extractor(ndjson_path="pol_062016-112019_labeled.ndjson", sample_size=1
 
 
 def post_printer(ops,from_post=0, to_posts=10):
+    """
+    Prints a selection of posts with their metadata.
+    
+    Args:
+        ops: List of opening post dictionaries
+        from_post: Starting index
+        to_posts: Number of posts to print
+    """
     post_n=0
     for op in ops:
         if post_n >= from_post:
@@ -71,5 +98,6 @@ def post_printer(ops,from_post=0, to_posts=10):
         post_n += 1
     
 if __name__ == "__main__":
+    # Example usage when run directly
     sample_prompt, meta_prompt = post_extractor(sample_size=100, min_len=50)
-    post_printer(meta_prompt, 0, 15)
+    post_printer(meta_prompt, 0, 15) # Example usage when run directly

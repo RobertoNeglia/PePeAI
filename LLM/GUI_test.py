@@ -1,63 +1,47 @@
-import tkinter as tk
-from tkinter import scrolledtext
-from PIL import Image, ImageTk
-from transformers import AutoTokenizer, AutoModelForCausalLM
-from peft import PeftModel
-import torch
-
-def generate_text(subject):
-    prompt = f"Generate a /pol/ style opening post about: {subject}"
-    inputs = tokenizer(prompt, return_tensors="pt").to("cuda")
-    outputs = model.generate(
-        **inputs,
-        max_new_tokens=150,
-        temperature=1.0,
-        top_k=20,
-        do_sample=True,
-        no_repeat_ngram_size=3,
-        repetition_penalty=1.5,
-        pad_token_id=tokenizer.eos_token_id,
-    )
-    return tokenizer.decode(outputs[0], skip_special_tokens=True)[43:]
-
-tokenizer = AutoTokenizer.from_pretrained("microsoft/phi-2", trust_remote_code=True)
-model = AutoModelForCausalLM.from_pretrained(
-    "microsoft/phi-2",
-    trust_remote_code=True,
-    device_map="auto",
-    torch_dtype=torch.float16
-)
-model = PeftModel.from_pretrained(model, "./kek_LLM").merge_and_unload()
-tokenizer.pad_token = tokenizer.eos_token
+#Import necessary libraries
+import tkinter as tk # Import tkinter for GUI
+from tkinter import scrolledtext # Import scrolledtext for scrollable text area
+from PIL import Image, ImageTk # Import PIL for image handling
+from LLM_test import gen_OP  # Import the LLM text generatoin function from LLM_test.py
 
 def GUI_exe():
+    """Main function to create and run the GUI application"""
+    # Initialize main application window
     root = tk.Tk()
-    root.title("GPT-4chan")
-
+    root.title("GPT-4chan") # Window title
+    # Create and pack UI elements with vertical padding
     tk.Label(root, text="Generate a post about:").pack(pady=5)
+    # Text entry field for user input
     entry = tk.Entry(root, width=50)
     entry.pack(pady=5)
-
+    # Scrollable text area for displaying generated posts
     output = scrolledtext.ScrolledText(root, width=60, height=10, wrap=tk.WORD)
     output.pack(pady=5)
+    # Label for displaying meme images
     image_label = tk.Label(root)
     image_label.pack(pady=5)
 
     def on_generate():
-        topic = entry.get()
+        """Callback function for the generate button"""
+        topic = entry.get() # Get user input
+        # make sure the topic is not empty
         if not topic:
             return
-        generated_text = generate_text(topic)
+        # Generate text using LLM LoRA model
+        generated_text = gen_OP(topic)
+        # Clear previous output and display new text
         output.delete(1.0, tk.END)
         output.insert(tk.END, generated_text)
-
-        
-        meme_img = Image.open("Pepeee.jpg")
+        # Generate image using LoRA diffusion model
+        generated_image = "Pepeee.jpg" # !!!!!!!!!!!!!!!!! Replace with actual image generation !!!!!!!!!!!!!!!!
+        meme_img = Image.open(generated_image)
         meme_photo = ImageTk.PhotoImage(meme_img)
+        # Update image display
         image_label.config(image=meme_photo)
         image_label.image = meme_photo
-    
+    # Create generate button with callback function
     tk.Button(root, text="Generate Post", command=on_generate).pack(pady=10)
+    # Start the main event loop
     root.mainloop()
 
 if __name__ == "__main__":
