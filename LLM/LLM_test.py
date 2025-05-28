@@ -1,4 +1,7 @@
 # Import necessary libraries
+import os
+os.environ["HF_HOME"] = "/tmp/huggingface"
+
 from transformers import AutoTokenizer, AutoModelForCausalLM # For loading model and tokenizer
 from peft import PeftModel # For loading LoRA weights
 import torch
