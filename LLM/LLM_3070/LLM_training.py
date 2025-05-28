@@ -77,5 +77,5 @@ trainer = Trainer(
 # Start training
 trainer.train()
 # Save the fine-tuned model and tokenizer
-model.save_pretrained("./phi2-meme-generator")
-tokenizer.save_pretrained("./phi2-meme-generator")
+model.save_pretrained("./kek_LLM")
+tokenizer.save_pretrained("./kek_LLM")
