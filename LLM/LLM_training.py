@@ -9,12 +9,9 @@ os.environ["TOKENIZERS_PARALLELISM"] = "false" # Disable tokenizer parallelism t
 from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig, TrainingArguments, Trainer, DataCollatorForLanguageModeling # for model and training
 from peft import LoraConfig, get_peft_model # for LoRA fine-tuning
 import torch
-from huggingface_hub import login # For Hugging Face model hub access
 from textsetup import post_extractor # Custom module for processing 4chan posts
 from datasets import Dataset # For dataset handling
 
-# Authenticate with Hugging Face Hub
-login(token="insert token") #!!! replace "insert token" with your actual token !!!
 # Configure 4-bit quantization to reduce memory usage
 bnb_config = BitsAndBytesConfig(
     load_in_4bit=True, # Load weights in 4-bit
