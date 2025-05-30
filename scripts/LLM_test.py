@@ -22,7 +22,8 @@ base_model = AutoModelForCausalLM.from_pretrained(
     torch_dtype=torch.float16,
 )
 # Load the LoRA weights from the training
-model = PeftModel.from_pretrained(base_model, "./kek_LLM")
+model = PeftModel.from_pretrained(base_model, "../LLM/kek_LLM")
+model = model.to("cuda")  # Move model to GPU for faster inference
 
 # Load the fine-tuned BERT-Emotion model
 sentiment_analysis = pipeline("text-classification", model="boltuix/bert-emotion")

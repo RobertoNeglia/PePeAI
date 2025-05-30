@@ -1,8 +1,10 @@
 # Import necessary libraries
 import tkinter as tk  # Import tkinter for GUI
 from tkinter import scrolledtext  # Import scrolledtext for scrollable text area
-from PIL import Image, ImageTk  # Import PIL for image handling
-from LLM_test import gen_OP  # Import the LLM text generatoin function from LLM_test.py
+from PIL import ImageTk  # Import PIL for image handling
+from LLM_test import (
+    gen_OP,
+)  # Import the LLM text generatoin function from LLM_test.py
 from generate_pepe import (
     generate_pepe,
 )  # Import the image generation function from generate_pepe.py
@@ -38,7 +40,7 @@ def GUI_exe():
         output.insert(tk.END, generated_text)
         # Generate image using LoRA diffusion model
         generated_image = generate_pepe(
-            generated_text, num_inference_steps=50, guidance_scale=10
+            generated_text, num_inference_steps=100, guidance_scale=10
         )
         # Save the generated image to a file
         meme_img = generated_image
