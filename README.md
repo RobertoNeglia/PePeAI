@@ -17,7 +17,7 @@ Create 4chan posts with images.
     conda activate genai
     ```
 
-## To train the LoRA model on the images:
+### To train the LoRA model on the images:
 
 1. ~~Download the dataset from [Kaggle](https://www.kaggle.com/datasets/tornikeonoprishvili/pepe-memes-dataaset).~~ (not really needed - the dataset is on Hugging Face)
 
@@ -30,8 +30,8 @@ Create 4chan posts with images.
 
 3. Export environment variables:
     ```bash
-    export MODEL_NAME="stabilityai/stable-diffusion-2" # or "runwayml/stable-diffusion-v1-5" for SD1.5
-    export DATASET_NAME="RobertoNeglia/pepe_dataset"
+    export MODEL_NAME="stabilityai/stable-diffusion-2-base" # or "runwayml/stable-diffusion-v1-5" for SD1.5
+    export DATASET_NAME="RobertoNeglia/pepe_dataset_sentiment"
     export OUTPUT_DIR="/path/to/output/dir" # e.g. "/home/user/pepe_lora"
     export HUB_MODEL_ID="yourusername/model_name" # e.g. "RobertoNeglia/pepe_generator"
     ```
@@ -78,20 +78,20 @@ Create 4chan posts with images.
 
 7. Look [here](https://github.com/huggingface/diffusers/blob/main/examples/text_to_image/README.md) for more information on training the LoRA model.
 
-## To generate images with the LoRA model:
+### To generate images with the LoRA model:
 
 ```python
 from diffusers import StableDiffusionPipeline
 import torch
 import matplotlib.pyplot as plt
 
-model_path = "RobertoNeglia/pepe_generator_sd2" # or RobertoNeglia/pepe_generator for SD1.5, or your own model path
-pipe = StableDiffusionPipeline.from_pretrained("stabilityai/stable-diffusion-2", torch_dtype=torch.float16) # or "runwayml/stable-diffusion-v1-5" for SD1.5
+model_path = "RobertoNeglia/RobertoNeglia/pepe_generator_sd2base_sentiment" # or RobertoNeglia/pepe_generator for SD1.5, or your own model path
+pipe = StableDiffusionPipeline.from_pretrained("stabilityai/stable-diffusion-2-base", torch_dtype=torch.float16) # or "runwayml/stable-diffusion-v1-5" for SD1.5
 pipe.unet.load_attn_procs(model_path)
 pipe.to("cuda")
 
-prompt = "A very sad Pepe the Frog, crying in a dark room, digital art"
-image = pipe(prompt, num_inference_steps=30, guidance_scale=7.5).images[0]
+prompt = "pepe the frog, sad, crying, digital art, high quality"
+image = pipe(prompt, num_inference_steps=50, guidance_scale=7.5).images[0]
 plt.imshow(image)
 plt.axis("off")
 plt.show()
@@ -106,7 +106,7 @@ plt.show()
 
 3. Run LLM_training.py.
 
-## To generate text with the LoRA LLM:
+### To generate text with the LoRA LLM:
 
 1. Open LLM_test.py.
 2. Insert a subject in the name==main block for the prompt "Generate a /pol/ style opening post about: {subject}".

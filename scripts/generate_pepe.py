@@ -1,6 +1,5 @@
 from diffusers import StableDiffusionPipeline
 import torch
-from transformers import pipeline
 
 # model_path = "RobertoNeglia/pepe_generator_sd2_sentiment"
 # pipe = StableDiffusionPipeline.from_pretrained(
@@ -14,13 +13,9 @@ pipe = StableDiffusionPipeline.from_pretrained(
 pipe.unet.load_attn_procs(model_path)
 pipe.to("cuda")
 
-# Load the fine-tuned BERT-Emotion model
-sentiment_analysis = pipeline("text-classification", model="boltuix/bert-emotion")
-sentiment_analysis.model.to("cuda")
-
 
 def generate_pepe(
-    text, num_inference_steps=50, guidance_scale=7.5, negative_prompt=None
+    topic, num_inference_steps=50, guidance_scale=7.5, negative_prompt=None
 ):
     """
     Generates an image of Pepe the Frog based on the provided prompt.
@@ -33,8 +28,7 @@ def generate_pepe(
     Returns:
         PIL.Image: Generated image of Pepe the Frog.
     """
-    topic = sentiment_analysis(text)[0]["label"]
-    prompt = "pepe the frog, " + topic
+    prompt = "pepe the frog, " + topic + ", digital art, high quality"
     image = pipe(
         prompt,
         num_inference_steps=num_inference_steps,
