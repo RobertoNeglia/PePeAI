@@ -96,4 +96,30 @@ plt.imshow(image)
 plt.axis("off")
 plt.show()
 ```
+## To train the LLM model on the /pol/-4chan posts:
 
+1. Download the [LLM data](https://zenodo.org/records/3606810) to the clone's driectory.
+
+3. Run termial commands in clone's driectory:
+- unzstd pol_0616-1119_labeled.tar.zst
+- tar -xvf pol_0616-1119_labeled.tar
+
+3. Run LLM_training.py.
+
+## To generate text with the LoRA LLM:
+
+1. Open LLM_test.py.
+2. Insert a subject in the name==main block for the prompt "Generate a /pol/ style opening post about: {subject}".
+```python
+if __name__ == "__main__":
+    # Test the generator with sample topics
+    print(gen_OP("Politics"))
+    print("\n !!!!!!!!!!! \n")
+    print(gen_OP("AI"))
+```
+3. Run LLM_test.py
+
+## To generate post with the GUI:
+1. Run GUI_test.py.
+2. Write a subject in textbox.
+3. Click on the generate button.
