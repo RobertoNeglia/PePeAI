@@ -1,14 +1,18 @@
-#Import necessary libraries
-import tkinter as tk # Import tkinter for GUI
-from tkinter import scrolledtext # Import scrolledtext for scrollable text area
-from PIL import Image, ImageTk # Import PIL for image handling
+# Import necessary libraries
+import tkinter as tk  # Import tkinter for GUI
+from tkinter import scrolledtext  # Import scrolledtext for scrollable text area
+from PIL import Image, ImageTk  # Import PIL for image handling
 from LLM_test import gen_OP  # Import the LLM text generatoin function from LLM_test.py
+from generate_pepe import (
+    generate_pepe,
+)  # Import the image generation function from generate_pepe.py
+
 
 def GUI_exe():
     """Main function to create and run the GUI application"""
     # Initialize main application window
     root = tk.Tk()
-    root.title("GPT-4chan") # Window title
+    root.title("PePeAI")  # Window title
     # Create and pack UI elements with vertical padding
     tk.Label(root, text="Generate a post about:").pack(pady=5)
     # Text entry field for user input
@@ -23,7 +27,7 @@ def GUI_exe():
 
     def on_generate():
         """Callback function for the generate button"""
-        topic = entry.get() # Get user input
+        topic = entry.get()  # Get user input
         # make sure the topic is not empty
         if not topic:
             return
@@ -33,16 +37,22 @@ def GUI_exe():
         output.delete(1.0, tk.END)
         output.insert(tk.END, generated_text)
         # Generate image using LoRA diffusion model
-        generated_image = "Pepeee.jpg" # !!!!!!!!!!!!!!!!! Replace with actual image generation !!!!!!!!!!!!!!!!
-        meme_img = Image.open(generated_image)
+        generated_image = generate_pepe(
+            generated_text, num_inference_steps=50, guidance_scale=10
+        )
+        # Save the generated image to a file
+        meme_img = generated_image
+        meme_img = meme_img.resize((400, 400))
         meme_photo = ImageTk.PhotoImage(meme_img)
         # Update image display
         image_label.config(image=meme_photo)
         image_label.image = meme_photo
+
     # Create generate button with callback function
     tk.Button(root, text="Generate Post", command=on_generate).pack(pady=10)
     # Start the main event loop
     root.mainloop()
+
 
 if __name__ == "__main__":
     GUI_exe()
