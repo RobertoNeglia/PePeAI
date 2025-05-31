@@ -13,11 +13,11 @@ Create 4chan posts with images.
 
 3. Create a virtual environment:
     ```bash
-    conda env create -f environment_img_lora.yml
+    conda env create -f environment.yml
     conda activate genai
     ```
 
-If you are running into environment issues, try running terminal commands:
+    If you are running into environment issues, try running terminal commands:
     ```bash
     conda create -n genai python=3.10 -y
     conda activate genai
