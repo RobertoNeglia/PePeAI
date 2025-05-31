@@ -22,11 +22,12 @@ base_model = AutoModelForCausalLM.from_pretrained(
     torch_dtype=torch.float16,
 )
 # Load the LoRA weights from the training
-model = PeftModel.from_pretrained(base_model, "./LLM/kek_LLM")
+weights_path = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), "..", "LLM", "kek_LLM"
+)
+print(weights_path)
+model = PeftModel.from_pretrained(base_model, weights_path)
 model = model.to("cuda")  # Move model to GPU for faster inference
-
-# Load the fine-tuned BERT-Emotion model
-sentiment_analysis = pipeline("text-classification", model="boltuix/bert-emotion")
 
 
 # Configure tokenizer settings as in training
@@ -64,31 +65,8 @@ def gen_OP(subject, max_length=150):
     return tokenizer.decode(outputs[0], skip_special_tokens=True)[43:]
 
 
-def test_sentiment(text):
-    """
-    Analyzes the sentiment of the given text.
-
-    Args:
-        text (str): Text to analyze
-
-    Returns:
-        str: Sentiment label
-    """
-    result = sentiment_analysis(text)
-    return result[0]["label"] if result else "neutral"
-
-
 if __name__ == "__main__":
     # Test the generator with sample topics
     topic = "cats"
     text = gen_OP(topic, max_length=150)
     print(text)
-    sentiment = test_sentiment(text)
-    print("sentiment: -> " + sentiment)
-    img = generate_pepe(
-        sentiment,
-        num_inference_steps=50,
-        guidance_scale=10,
-        negative_prompt="ugly, blurry, bad quality, text, watermark, logo, signature, low resolution, low quality",
-    )
-    img.save("generated_pepe.jpg")
