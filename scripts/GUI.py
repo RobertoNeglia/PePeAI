@@ -8,7 +8,7 @@ from LLM_test import (
 from generate_pepe import (
     generate_pepe,
 )  # Import the image generation function from generate_pepe.py
-from scripts.sentiment_analysis import (
+from sentiment_analysis import (
     sentiment_analysis,
 )  # Import the text summarization function from summarize_text.py
 
@@ -42,7 +42,7 @@ def GUI_exe():
         output.delete(1.0, tk.END)
         output.insert(tk.END, generated_text)
         # Summarize the generated text
-        summarized_text = sentiment_analysis(generated_text)
+        #summarized_text = sentiment_analysis(generated_text) #not in current usage
         # Generate image using LoRA diffusion model
         generated_image = generate_pepe(
             topic, num_inference_steps=100, guidance_scale=10

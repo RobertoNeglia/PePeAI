@@ -18,10 +18,12 @@ Create 4chan posts with images.
     ```
 
 If you are running into environment issues, try running terminal commands:
-1. conda create -n genai python=3.10 -y 
-2. conda activate genai
-3. pip install  transformers peft diffusers accelerate safetensors
-
+    ```bash
+    conda create -n genai python=3.10 -y
+    conda activate genai
+    pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+    pip install  transformers peft diffusers accelerate safetensors
+    ```
 ### To train the LoRA image generator on the images:
 
 1. ~~Download the dataset from [Kaggle](https://www.kaggle.com/datasets/tornikeonoprishvili/pepe-memes-dataaset).~~ (not really needed - the dataset is on Hugging Face)
@@ -106,8 +108,10 @@ plt.show()
 1. Download the [LLM data](https://zenodo.org/records/3606810) to the clone's driectory.
 
 3. Run termial commands in clone's driectory:
-- unzstd pol_0616-1119_labeled.tar.zst
-- tar -xvf pol_0616-1119_labeled.tar
+    ```bash
+    unzstd pol_0616-1119_labeled.tar.zst
+    tar -xvf pol_0616-1119_labeled.tar
+    ```
 
 3. Run LLM_training.py.
 
@@ -123,8 +127,16 @@ if __name__ == "__main__":
     print(text)
 ```
 3. Run LLM_test.py
+    ```bash
+    cd scripts
+    python LLM_test.py
+    ```
 
 ## To generate post with the GUI:
-1. Run GUI_test.py.
+1. Run GUI.py.
+    ```bash
+    cd scripts
+    python GUI.py
+    ```
 2. Write a subject in textbox.
 3. Click on the generate button.
