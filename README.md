@@ -68,7 +68,7 @@ Create 4chan posts with images.
     --random_flip   \
     --train_batch_size=24   \ # Adjust based on your GPU memory
     --gradient_accumulation_steps=4   \
-    --max_train_steps=1500   \ # Number of training steps
+    --max_train_steps=4300   \ # Number of training steps
     --learning_rate=1e-04   \ # Learning rate for the optimizer
     --max_grad_norm=1   \ # Maximum gradient norm
     --lr_scheduler="cosine" \ # Learning rate scheduler
@@ -78,9 +78,11 @@ Create 4chan posts with images.
     --hub_model_id=${HUB_MODEL_ID}   \
     --report_to=wandb   \ # Log to WandB
     --checkpointing_steps=500   \ # Save checkpoints every 500 steps
-    --validation_prompt="A very sad Pepe the Frog"   \ # Prompt for validation
-    --seed=1337 \
+    --validation_prompt="pepe the frog, happiness"   \ # Prompt for validation
+    --seed=42 \
     --caption_column="features" # Column in the dataset containing the captions
+    --validation_epochs=50 # Validate every 50 epochs
+    --rank=16 # Rank for LoRA
     ```
 
 7. Look [here](https://github.com/huggingface/diffusers/blob/main/examples/text_to_image/README.md) for more information on training the LoRA model.
@@ -92,8 +94,8 @@ from diffusers import StableDiffusionPipeline
 import torch
 import matplotlib.pyplot as plt
 
-model_path = "RobertoNeglia/RobertoNeglia/pepe_generator_sd2base_sentiment" # or RobertoNeglia/pepe_generator for SD1.5, or your own model path
-pipe = StableDiffusionPipeline.from_pretrained("stabilityai/stable-diffusion-2-base", torch_dtype=torch.float16) # or "runwayml/stable-diffusion-v1-5" for SD1.5
+model_path = "RobertoNeglia/RobertoNeglia/pepe_generator_sd2base_sentiment"
+pipe = StableDiffusionPipeline.from_pretrained("stabilityai/stable-diffusion-2-base", torch_dtype=torch.float16)
 pipe.unet.load_attn_procs(model_path)
 pipe.to("cuda")
 

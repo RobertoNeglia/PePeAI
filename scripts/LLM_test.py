@@ -25,7 +25,6 @@ base_model = AutoModelForCausalLM.from_pretrained(
 weights_path = os.path.join(
     os.path.dirname(os.path.abspath(__file__)), "..", "LLM", "kek_LLM"
 )
-print(weights_path)
 model = PeftModel.from_pretrained(base_model, weights_path)
 model = model.to("cuda")  # Move model to GPU for faster inference
 

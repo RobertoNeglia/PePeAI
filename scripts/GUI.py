@@ -24,6 +24,9 @@ def GUI_exe():
     # Text entry field for user input
     entry = tk.Entry(root, width=50)
     entry.pack(pady=5)
+    entry.bind(
+        "<Return>", lambda event: on_generate()
+    )  # Bind Enter key to generate action
     # Scrollable text area for displaying generated posts
     output = scrolledtext.ScrolledText(root, width=60, height=10, wrap=tk.WORD)
     output.pack(pady=5)
