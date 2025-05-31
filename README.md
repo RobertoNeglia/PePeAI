@@ -17,7 +17,12 @@ Create 4chan posts with images.
     conda activate genai
     ```
 
-### To train the LoRA model on the images:
+If you are running into environment issues, try running terminal commands:
+1. conda create -n genai python=3.10 -y 
+2. conda activate genai
+3. pip install  transformers peft diffusers accelerate safetensors
+
+### To train the LoRA image generator on the images:
 
 1. ~~Download the dataset from [Kaggle](https://www.kaggle.com/datasets/tornikeonoprishvili/pepe-memes-dataaset).~~ (not really needed - the dataset is on Hugging Face)
 
@@ -78,7 +83,7 @@ Create 4chan posts with images.
 
 7. Look [here](https://github.com/huggingface/diffusers/blob/main/examples/text_to_image/README.md) for more information on training the LoRA model.
 
-### To generate images with the LoRA model:
+### To generate images with the LoRA image generator:
 
 ```python
 from diffusers import StableDiffusionPipeline
@@ -113,9 +118,9 @@ plt.show()
 ```python
 if __name__ == "__main__":
     # Test the generator with sample topics
-    print(gen_OP("Politics"))
-    print("\n !!!!!!!!!!! \n")
-    print(gen_OP("AI"))
+    topic = "cats"
+    text = gen_OP(topic, max_length=150)
+    print(text)
 ```
 3. Run LLM_test.py
 
