@@ -1,6 +1,9 @@
 # PePeAI
 Create 4chan posts with images.
 
+## Overview
+![PoliticianPepe](images/PoliticianPepe.png)
+
 ## Image Generator environment Setup
 
 1. Clone the repository:
@@ -94,7 +97,7 @@ from diffusers import StableDiffusionPipeline
 import torch
 import matplotlib.pyplot as plt
 
-model_path = "RobertoNeglia/RobertoNeglia/pepe_generator_sd2base_sentiment"
+model_path = "RobertoNeglia/pepe_generator_sd2base_sentiment"
 pipe = StableDiffusionPipeline.from_pretrained("stabilityai/stable-diffusion-2-base", torch_dtype=torch.float16)
 pipe.unet.load_attn_procs(model_path)
 pipe.to("cuda")
